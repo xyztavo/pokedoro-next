@@ -56,6 +56,7 @@ export default function ProfileForm() {
             setCookie('auth', token, { httpOnly: false })
             toast.success('User created.')
             router.push('/user')
+            router.refresh()
         } catch (error) {
             toast.error('User already exists.')
         } finally {

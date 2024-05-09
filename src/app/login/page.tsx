@@ -46,7 +46,7 @@ export default function ProfileForm() {
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         setIsLoading(true)
-        
+
         try {
             const res = await axios.post('http://localhost:8787/user/login', values);
             const data = res.data;
@@ -57,6 +57,7 @@ export default function ProfileForm() {
             setCookie('auth', token, { httpOnly: false })
             toast.success('logged in')
             router.push('/user')
+            router.refresh()
         } catch (error) {
             // todo: validate better each error using res.status = 4xx 
             toast.error('password / user does not match')

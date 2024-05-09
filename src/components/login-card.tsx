@@ -35,6 +35,7 @@ export function LoginCard() {
                 <DropdownMenuItem onClick={() => {
                     deleteCookie('auth')
                     router.push('/login')
+                    router.refresh()
                     }}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
