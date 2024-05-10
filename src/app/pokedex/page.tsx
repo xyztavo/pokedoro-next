@@ -44,7 +44,7 @@ function Page() {
 
     return (
         <>
-            <div>
+            <div className="flex flex-col items-center justify-center space-y-8 m-2 rounded-md">
                 <form className="flex flex-row items-center justify-center my-4" onSubmit={(e) => {
                     e.preventDefault()
                     router.push(`/pokedex?query=${pokemonQuery}`)
@@ -54,10 +54,10 @@ function Page() {
                         <Button type="submit"><Search /></Button>
                     </div>
                 </form>
-                <div className="flex flex-col space-y-8 my-4 items-center justify-center">
+                <div>
                     <div className="flex flex-row flex-wrap justify-center gap-4 p-4">{data && pokemonList(data.pokemons)}</div>
                 </div>
-                <Pagination>
+                <Pagination className=" scale-75 md:scale-100">
                     <PaginationContent>
                         <PaginationItem>
                             <PaginationPrevious href="#" onClick={() => router.push(`/pokedex?pageIndex=${currentPage > 0 ? currentPage - 1 : currentPage}${pokemonQuery ? '&query=' + pokemonQuery : ''}`)} />

@@ -71,7 +71,7 @@ function Page() {
             }}>
                 <div className="flex flex-row gap-4 max-w-[1/2]">
                     <Input value={pokemonQuery} onChange={(e) => setPokemonQuery(e.target.value)} placeholder="search for a pokemon" />
-                    <Button type="submit"><Search /></Button>
+                    <Button type="submit" variant={'ghost'} size={'icon'}><Search /></Button>
                 </div>
             </form>
             {error &&
@@ -84,12 +84,12 @@ function Page() {
                 </div>
             }
             {data &&
-                <div className='flex flex-col justify-center items-center my-4 space-y-4'>
+                <div className='flex flex-col items-center justify-center space-y-8 m-2 rounded-md'>
                     <h1>{data.user}</h1>
-                    <div className="flex flex-col space-y-8 my-4 items-center justify-center">
+                    <div className="">
                         <div className="flex flex-row flex-wrap justify-center gap-4 p-4">{data && pokemonList(data.pokemons)}</div>
                     </div>
-                    <Pagination>
+                    <Pagination className='scale-75 md:scale-100'>
                         <PaginationContent>
                             <PaginationItem>
                                 <PaginationPrevious href="#" onClick={() => router.push(`/user?pageIndex=${currentPage > 0 ? currentPage - 1 : currentPage}${pokemonQuery ? '&query=' + pokemonQuery : ''}`)} />
@@ -117,7 +117,8 @@ function Page() {
                             </PaginationItem>
                         </PaginationContent>
                     </Pagination>
-                </div>}
+                </div>
+            }
         </>
     )
 }
