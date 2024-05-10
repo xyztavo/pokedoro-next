@@ -4,7 +4,7 @@ import { getCookie } from "cookies-next"
 import { Loader2, Search } from 'lucide-react'
 import { pokemonList } from '@/components/pokemon/pokemons-list'
 import { Button } from '@/components/ui/button'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination'
 import { Input } from '@/components/ui/input'
@@ -15,7 +15,7 @@ import { returnTypeIcon } from '@/lib/utils/returnTypeIcon'
 import { toast } from 'sonner'
 import env from '@/lib/config.json'
 
-export default function Page() {
+function Page() {
     // pagination and query stuff
     const [pokemonQuery, setPokemonQuery] = useState('')
     const searchParams = useSearchParams()
@@ -119,5 +119,13 @@ export default function Page() {
                     </Pagination>
                 </div>}
         </>
+    )
+}
+
+export default function SuspenseWrapper() {
+    return (
+        <Suspense fallback={<div className="flex flex-row justify-center items-center gap-4"><Loader2 className="animate-spin" />Loading ...</div>}>
+            <Page />
+        </Suspense>
     )
 }

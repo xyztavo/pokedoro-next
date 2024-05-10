@@ -1,7 +1,7 @@
 "use client"
 import { pokemonList } from "@/components/pokemon/pokemons-list"
 import { useRouter, useSearchParams } from "next/navigation"
-import { useState } from "react"
+import { Suspense, useState } from "react"
 import {
     Pagination,
     PaginationContent,
@@ -13,13 +13,13 @@ import {
 } from "@/components/ui/pagination"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Loader2Icon, Search } from "lucide-react"
+import { Loader2, Loader2Icon, Search } from "lucide-react"
 import useSWR from "swr";
 import Link from "next/link"
 import env from '@/lib/config.json'
 
 
-export default function Page() {
+function Page() {
     const [pokemonQuery, setPokemonQuery] = useState('')
     const searchParams = useSearchParams()
     const pageIndex = Number(searchParams.get('pageIndex'))
@@ -43,47 +43,57 @@ export default function Page() {
         </div>)
 
     return (
-        <div>
-            <form className="flex flex-row items-center justify-center my-4" onSubmit={(e) => {
-                e.preventDefault()
-                router.push(`/pokedex?query=${pokemonQuery}`)
-            }}>
-                <div className="flex flex-row gap-4 max-w-[1/2]">
-                    <Input value={pokemonQuery} onChange={(e) => setPokemonQuery(e.target.value)} placeholder="search for a pokemon" />
-                    <Button type="submit"><Search /></Button>
+        <>
+            <div>
+                <form className="flex flex-row items-center justify-center my-4" onSubmit={(e) => {
+                    e.preventDefault()
+                    router.push(`/pokedex?query=${pokemonQuery}`)
+                }}>
+                    <div className="flex flex-row gap-4 max-w-[1/2]">
+                        <Input value={pokemonQuery} onChange={(e) => setPokemonQuery(e.target.value)} placeholder="search for a pokemon" />
+                        <Button type="submit"><Search /></Button>
+                    </div>
+                </form>
+                <div className="flex flex-col space-y-8 my-4 items-center justify-center">
+                    <div className="flex flex-row flex-wrap justify-center gap-4 p-4">{data && pokemonList(data.pokemons)}</div>
                 </div>
-            </form>
-            <div className="flex flex-col space-y-8 my-4 items-center justify-center">
-                <div className="flex flex-row flex-wrap justify-center gap-4 p-4">{data && pokemonList(data.pokemons)}</div>
+                <Pagination>
+                    <PaginationContent>
+                        <PaginationItem>
+                            <PaginationPrevious href="#" onClick={() => router.push(`/pokedex?pageIndex=${currentPage > 0 ? currentPage - 1 : currentPage}${pokemonQuery ? '&query=' + pokemonQuery : ''}`)} />
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationLink href="#">{currentPage - 1}</PaginationLink>
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationLink href="#" isActive>
+                                {currentPage}
+                            </PaginationLink>
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationLink href="#">{currentPage + 1}</PaginationLink>
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationEllipsis />
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationNext href="#" onClick={() => {
+                                if (currentPage >= data.maxPages) return
+                                router.push(`/pokedex?pageIndex=${currentPage + 1}${pokemonQuery ? '&query=' + pokemonQuery : ''}`)
+                            }
+                            } />
+                        </PaginationItem>
+                    </PaginationContent>
+                </Pagination>
             </div>
-            <Pagination>
-                <PaginationContent>
-                    <PaginationItem>
-                        <PaginationPrevious href="#" onClick={() => router.push(`/pokedex?pageIndex=${currentPage > 0 ? currentPage - 1 : currentPage}${pokemonQuery ? '&query=' + pokemonQuery : ''}`)} />
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationLink href="#">{currentPage - 1}</PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationLink href="#" isActive>
-                            {currentPage}
-                        </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationLink href="#">{currentPage + 1}</PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationEllipsis />
-                    </PaginationItem>
-                    <PaginationItem>
-                        <PaginationNext href="#" onClick={() => {
-                            if (currentPage >= data.maxPages) return
-                            router.push(`/pokedex?pageIndex=${currentPage + 1}${pokemonQuery ? '&query=' + pokemonQuery : ''}`)
-                        }
-                        } />
-                    </PaginationItem>
-                </PaginationContent>
-            </Pagination>
-        </div>
+        </>
+    )
+}
+
+export default function SuspenseWrapper() {
+    return (
+        <Suspense fallback={<div className="flex flex-row justify-center items-center gap-4"><Loader2 className="animate-spin"/>Loading ...</div>}>
+            <Page />
+        </Suspense>
     )
 }
