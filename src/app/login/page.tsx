@@ -32,6 +32,8 @@ const formSchema = z.object({
     })
 })
 
+import env from '@/lib/config.json'
+
 export default function ProfileForm() {
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
@@ -48,7 +50,7 @@ export default function ProfileForm() {
         setIsLoading(true)
 
         try {
-            const res = await axios.post('http://localhost:8787/user/login', values);
+            const res = await axios.post(`${env.API_BASE_URL}/user/login`, values);
             const data = res.data;
             const token = data.token;
 

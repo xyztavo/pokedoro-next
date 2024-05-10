@@ -22,7 +22,7 @@ import { toast } from "sonner"
 import { useRouter } from 'next/navigation'
 import { useState } from "react"
 import { Loader2 } from "lucide-react"
-
+import env from '@/lib/config.json'
 
 const formSchema = z.object({
     name: z.string(),
@@ -47,7 +47,7 @@ export default function ProfileForm() {
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
             setIsLoading(true)
-            const res = await axios.post('http://localhost:8787/user', values);
+            const res = await axios.post(`${env.API_BASE_URL}/user`, values);
             const data = res.data;
             const token = data.token;
 
