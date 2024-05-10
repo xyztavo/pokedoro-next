@@ -86,8 +86,8 @@ function Page() {
             {data &&
                 <div className='flex flex-col items-center justify-center space-y-8 m-2 rounded-md'>
                     <h1>{data.user}</h1>
-                    <div className="">
-                        <div className="flex flex-row flex-wrap justify-center gap-4 p-4">{data && pokemonList(data.pokemons)}</div>
+                    <div className="flex flex-row justify-center items-center flex-wrap gap-4">
+                        {data && pokemonList(data.pokemons)}
                     </div>
                     <Pagination className='scale-75 md:scale-100'>
                         <PaginationContent>

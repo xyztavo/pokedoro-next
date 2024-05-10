@@ -54,8 +54,8 @@ function Page() {
                         <Button type="submit"><Search /></Button>
                     </div>
                 </form>
-                <div>
-                    <div className="flex flex-row flex-wrap justify-center gap-4 p-4">{data && pokemonList(data.pokemons)}</div>
+                <div className="flex flex-row justify-center items-center flex-wrap gap-4">
+                    {data && pokemonList(data.pokemons)}
                 </div>
                 <Pagination className=" scale-75 md:scale-100">
                     <PaginationContent>
@@ -92,7 +92,7 @@ function Page() {
 
 export default function SuspenseWrapper() {
     return (
-        <Suspense fallback={<div className="flex flex-row justify-center items-center gap-4"><Loader2 className="animate-spin"/>Loading ...</div>}>
+        <Suspense fallback={<div className="flex flex-row justify-center items-center gap-4"><Loader2 className="animate-spin" />Loading ...</div>}>
             <Page />
         </Suspense>
     )
