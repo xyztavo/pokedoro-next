@@ -1,5 +1,5 @@
 "use client"
-import { pokemonList } from "@/components/pokemons-list"
+import { pokemonList } from "@/components/pokemon/pokemons-list"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
 import {
@@ -25,15 +25,16 @@ export default function Page() {
     const query = searchParams.get('query')
     const router = useRouter()
     const currentPage = pageIndex ? pageIndex : 0
+    const baseUrl = process.env.BASE_URL
 
 
     const { data, error, isLoading, } = useSWR(['a', pageIndex, query], async () => {
-        const results = await fetch(`http://localhost:8787/pokemon?pageIndex=${pageIndex ? pageIndex : 0}` + (query ? `&query=${query}` : ''))
+        const results = await fetch(`${baseUrl}/pokemon?pageIndex=${pageIndex ? pageIndex : 0}` + (query ? `&query=${query}` : ''))
         return await results.json()
     }, { shouldRetryOnError: false, revalidateOnFocus: false })
 
     if (isLoading) return (
-        <div className="flex justify-center items-center h-52"><Loader2Icon className="animate-spin" />Loading...</div>
+        <div className="flex justify-center items-center h-52 gap-4"><Loader2Icon className="animate-spin" />Loading...</div>
     )
     if (error) return (
         <div className="flex justify-center items-center gap-4">

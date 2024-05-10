@@ -1,5 +1,5 @@
-import getPokemons from "@/api/getPokemons";
-import { pokemonList } from "@/components/pokemons-list";
+import getPokemons from "@/api/get-pokemons";
+import { pokemonList } from "@/components/pokemon/pokemons-list";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 

@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { getCookie, deleteCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 import {
