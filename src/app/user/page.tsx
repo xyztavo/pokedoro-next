@@ -13,6 +13,7 @@ import { putRandomUserPoke } from '@/api/put-random-user-poke'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { returnTypeIcon } from '@/lib/utils/returnTypeIcon'
 import { toast } from 'sonner'
+import env from '@/lib/config.json'
 
 export default function Page() {
     // pagination and query stuff
@@ -26,7 +27,7 @@ export default function Page() {
     const authToken = getCookie('auth')
 
     const { mutate, data, error, isLoading } = useSWR(['get/user/pokemon', pageIndex, query], async () => {
-        const results = await fetch(`http://localhost:8787/user/pokemon?pageIndex=${pageIndex ? pageIndex : 0}${query ? `&query=${query}` : ''}`, {
+        const results = await fetch(`${env.API_BASE_URL}/user/pokemon?pageIndex=${pageIndex ? pageIndex : 0}${query ? `&query=${query}` : ''}`, {
             headers: new Headers({
                 'Authorization': `Beaerer ${authToken}`
             }),
