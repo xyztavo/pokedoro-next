@@ -25,7 +25,9 @@ import { Loader2 } from "lucide-react"
 import env from '@/lib/config.json'
 
 const formSchema = z.object({
-    name: z.string().min(5).max(20, { message: "max username characters is 20" }),
+    name: z.string().min(5, {
+        message: "username must have at least 5 characters."
+    }).max(20, { message: "max username characters is 20" }),
     email: z.string().email({
         message: "Email not valid."
     }),
