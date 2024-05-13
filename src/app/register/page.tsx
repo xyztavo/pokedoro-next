@@ -25,13 +25,13 @@ import { Loader2 } from "lucide-react"
 import env from '@/lib/config.json'
 
 const formSchema = z.object({
-    name: z.string(),
+    name: z.string().min(5).max(20, { message: "max username characters is 20" }),
     email: z.string().email({
         message: "Email not valid."
     }),
-    password: z.string().min(6, {
-        message: "Password not valid."
-    })
+    password: z.string().min(5, {
+        message: "Password must include at least 5 characters."
+    }).max(30, { message: "max password characters is 30" })
 })
 
 export default function ProfileForm() {
@@ -117,7 +117,7 @@ export default function ProfileForm() {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit"  disabled={isLoading} className="flex flex-row justify-center items-center gap-4">{isLoading ? <><Loader2 className="animate-spin" />Creating User</> : <>Create user</>}</Button>
+                    <Button type="submit" disabled={isLoading} className="flex flex-row justify-center items-center gap-4">{isLoading ? <><Loader2 className="animate-spin" />Creating User</> : <>Create user</>}</Button>
                 </form>
             </Form>
             <Button variant={'link'} asChild><Link href={'/login'}>already have an account? log in</Link></Button>
