@@ -1,13 +1,14 @@
 import { returnTypeIcon } from "@/lib/utils/returnTypeIcon"
 import { TPokemons } from "@/types/pokemons"
 import Link from "next/link"
+import { motion } from "framer-motion"
 
-export function pokemonList(pokemons: TPokemons) {
+export function pokemonListAnimated(pokemons: TPokemons) {
     return pokemons.map((poke) => (
         <div
             key={poke.id}
         >
-        <div className="border rounded-md bg-background" >
+        <motion.div whileHover={{ scale: 1.2}}  className="border rounded-md bg-background" >
                 <Link href={`/pokedex/${poke.id}`}>
                     <div className="flex items-center justify-center gap-4 border-b">
                         <div className="flex  items-center justify-center gap-4">
@@ -22,7 +23,8 @@ export function pokemonList(pokemons: TPokemons) {
                     </div>
                     <h1 className="border-t text-sm whitespace-nowrap text-ellipsis overflow-clip m-auto text-center my-1">{poke.name}</h1>
                 </Link>
-        </div>
+        </motion.div>
+
         </div>
     ))
 }

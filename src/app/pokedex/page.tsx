@@ -17,6 +17,7 @@ import { Loader2, Loader2Icon, Search } from "lucide-react"
 import useSWR from "swr";
 import Link from "next/link"
 import env from '@/lib/config.json'
+import { pokemonListAnimated } from "@/components/pokemon/pokemons-list-with-animation"
 
 
 function Page() {
@@ -54,8 +55,8 @@ function Page() {
                         <Button type="submit"><Search /></Button>
                     </div>
                 </form>
-                <div className="flex flex-row justify-center items-center flex-wrap gap-4">
-                    {data && pokemonList(data.pokemons)}
+                <div  className="flex flex-row justify-center items-center flex-wrap gap-4">
+                    {data && pokemonListAnimated(data.pokemons)}
                 </div>
                 <Pagination className=" scale-75 md:scale-100">
                     <PaginationContent>

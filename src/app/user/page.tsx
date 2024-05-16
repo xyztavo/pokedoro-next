@@ -2,7 +2,6 @@
 import useSWR from 'swr'
 import { getCookie } from "cookies-next"
 import { Loader2, Search } from 'lucide-react'
-import { pokemonList } from '@/components/pokemon/pokemons-list'
 import { Button } from '@/components/ui/button'
 import { Suspense, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -14,6 +13,7 @@ import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { returnTypeIcon } from '@/lib/utils/returnTypeIcon'
 import { toast } from 'sonner'
 import env from '@/lib/config.json'
+import { pokemonListAnimated } from '@/components/pokemon/pokemons-list-with-animation'
 
 function Page() {
     // pagination and query stuff
@@ -87,7 +87,7 @@ function Page() {
                 <div className='flex flex-col items-center justify-center space-y-8 m-2 rounded-md'>
                     <h1>{data.user}</h1>
                     <div className="flex flex-row justify-center items-center flex-wrap gap-4">
-                        {data && pokemonList(data.pokemons)}
+                        {data && pokemonListAnimated(data.pokemons)}
                     </div>
                     <Pagination className='scale-75 md:scale-100'>
                         <PaginationContent>
