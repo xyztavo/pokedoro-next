@@ -1,4 +1,4 @@
-import { returnTypeIcon } from "@/lib/utils/returnTypeIcon"
+import { returnTypeIcon } from "@/components/pokemon/return-type-icon"
 import { TPokemons } from "@/types/pokemons"
 import Link from "next/link"
 

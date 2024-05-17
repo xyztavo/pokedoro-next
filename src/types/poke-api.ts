@@ -2,6 +2,8 @@ export type pokeApi = {
     pokemonId: number,
     name: string,
     sprites: pokeApiSpritesUrls,
+    height: number,
+    weight: number, 
     types: any[],
 }
 
