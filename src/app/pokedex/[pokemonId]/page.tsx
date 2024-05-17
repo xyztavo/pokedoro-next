@@ -11,22 +11,12 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel"
+import { pokeApi } from "@/types/poke-api"
+import { SpriteGallery } from "@/components/pokemon/sprite-gallery"
 
 
 export default function Page() {
     const params = useParams<{ pokemonId: string }>()
-
-    type pokeApi = {
-        pokemonId: number,
-        name: string,
-        sprites: pokeApiSpritesUrls,
-        types: [],
-    }
-
-    type pokeApiSpritesUrls = {
-        front_default: string
-    }
-
 
     const { data, error, isLoading, isValidating } = useSWR<pokeApi>('pokemon', async () => {
         const results = await axios.get(`https://pokeapi.co/api/v2/pokemon/${params.pokemonId}`)
@@ -39,7 +29,6 @@ export default function Page() {
     return (
         data &&
         <div className="flex flex-col justify-between items-center my-4 space-y-4">
-
             <div className="flex flex-col items-center gap-4 border rounded-md p-4">
                 <div className="flex flex-row items-center gap-4">
                     <p>{String(data.name).charAt(0).toUpperCase() + String(data.name).slice(1)}</p>
@@ -52,7 +41,7 @@ export default function Page() {
                         const typeIdActual = String(typeId[1]).replace(',', '')
 
                         return (
-                            <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vi/x-y/${typeIdActual}.png`}></img>
+                            <img key={idx} src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vi/x-y/${typeIdActual}.png`}></img>
                         )
                     })}
                 </div>
@@ -74,31 +63,7 @@ export default function Page() {
                     <CarouselNext />
                 </Carousel>
             </div>
-
-
-            <div className="flex flex-col rounded-md bg-foreground/3 p-2">
-                <h1 className="text-center">Sprites gallery:</h1>
-                <Carousel opts={{
-                    loop: true,
-                }}>
-                    <div className="border rounded-md">
-                        <CarouselContent className="max-w-56">
-                            {Object.values(data.sprites).sort().map((sUrl, idx) => {
-                                if (typeof sUrl == 'string') {
-                                    return (
-                                        <CarouselItem key={idx}>
-                                            <img className="w-56" src={sUrl} />
-                                        </CarouselItem>
-                                    )
-                                }
-                            })
-                            }
-                        </CarouselContent>
-                        <CarouselPrevious />
-                        <CarouselNext />
-                    </div>
-                </Carousel>
-            </div>
+           <SpriteGallery pokeApiData={data} />
         </div>
     )
 }
