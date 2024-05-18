@@ -40,9 +40,9 @@ export default function Page() {
     return (
         data &&
         aditionalData &&
-        <div className="flex flex-col justify-center items-center gap-4">
-            <div className="flex flex-col xl:flex-row justify-between items-center gap-4 my-4 space-y-4">
-                <div className="flex flex-col items-center gap-4 border rounded-md p-4">
+        <div className="flex flex-col justify-center gap-4 ">
+            <div className="flex flex-col md:flex-row justify-center md:gap-28 items-center p-4 space-y-4">
+                <div className="flex flex-col items-center gap-4 border rounded-md p-4 w-[350px]">
                     <div className="flex flex-row items-center gap-4">
                         <p>{String(data.name).charAt(0).toUpperCase() + String(data.name).slice(1)}</p>
                         <p className="border p-1 rounded-md"> ID:{params.pokemonId}</p>
@@ -82,18 +82,20 @@ export default function Page() {
                         <p className="flex flex-row gap-4 justify-center  items-center"><Weight />Weight: {data.weight}kg</p>
                     </div>
                 </div>
+                <SpriteGallery pokeApiData={data} />
             </div>
-            <SpriteGallery pokeApiData={data} />
             {aditionalData.flavor_text_entries &&
-                    <div className="flex flex-col">
-                        <div className="flex flex-col justify-center items-center gap-4">
-                            <h1>Quotes:</h1>
+                <div className="flex flex-col">
+                    <div className="flex flex-col justify-center items-center gap-4 p-2">
+                        <h1>Quotes:</h1>
+                        <div className="flex flex-col md:flex-row border rounded-md ">
                             {quotesEntries.map((e, idx) => {
-                                return <p key={idx} className="max-w-[400px] text-[10px] leading-5 font-thin text-center">{aditionalData.flavor_text_entries[e].flavor_text}</p>
+                                return <p key={idx} className="border-y md:border-x p-4 max-w-[400px] text-[10px] leading-5 font-thin text-center">{aditionalData.flavor_text_entries[e].flavor_text}</p>
                             })}
                         </div>
                     </div>
-                }
+                </div>
+            }
         </div>
     )
 }

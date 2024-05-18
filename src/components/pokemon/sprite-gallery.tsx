@@ -13,8 +13,8 @@ import { pokeApi } from "@/types/poke-api"
 
 export function SpriteGallery({ pokeApiData }: { pokeApiData: pokeApi }) {
     return (
-        <div className="flex flex-col items-center gap-4 border rounded-md p-4">
-            <Tabs defaultValue="artwork">
+        <div className="flex flex-col justify-center items-center gap-4 h-96 w-[350px] border rounded-md p-4">
+            <Tabs defaultValue="artwork" className="flex flex-col justify-center items-center">
                 <h1>Sprites gallery:</h1>
                 <TabsList >
                     {pokeApiData.sprites.other['official-artwork'] &&
@@ -32,12 +32,12 @@ export function SpriteGallery({ pokeApiData }: { pokeApiData: pokeApi }) {
                         <Carousel opts={{
                             loop: true,
                         }}>
-                            <CarouselContent className="w-56">
+                            <CarouselContent className="w-64">
                                 {Object.values(pokeApiData.sprites.other['official-artwork']).sort().map((sUrl, idx) => {
                                     if (typeof sUrl == 'string') {
                                         return (
-                                            <CarouselItem key={idx}>
-                                                <img className="w-56" src={sUrl} />
+                                            <CarouselItem key={idx} className="h-[250px] flex justify-center items-center">
+                                                <img className="h-full" src={sUrl} />
                                             </CarouselItem>
                                         )
                                     }
@@ -54,12 +54,12 @@ export function SpriteGallery({ pokeApiData }: { pokeApiData: pokeApi }) {
                         <Carousel opts={{
                             loop: true,
                         }}>
-                            <CarouselContent className="max-w-56">
+                            <CarouselContent className="w-64">
                                 {Object.values(pokeApiData.sprites).sort().map((sUrl, idx) => {
                                     if (typeof sUrl == 'string') {
                                         return (
-                                            <CarouselItem key={idx}>
-                                                <img className="w-56 disable-blur" src={sUrl} />
+                                            <CarouselItem key={idx} className="h-[250px] flex justify-center items-center">
+                                                <img className="w-full disable-blur" src={sUrl} />
                                             </CarouselItem>
                                         )
                                     }
@@ -76,12 +76,12 @@ export function SpriteGallery({ pokeApiData }: { pokeApiData: pokeApi }) {
                         <Carousel opts={{
                             loop: true,
                         }}>
-                            <CarouselContent className="max-w-56">
+                            <CarouselContent className="w-64">
                                 {Object.values(pokeApiData.sprites.versions['generation-vi']['x-y']).sort().map((sUrl, idx) => {
                                     if (typeof sUrl == 'string') {
                                         return (
-                                            <CarouselItem key={idx}>
-                                                <img className="w-56 disable-blur" src={sUrl} />
+                                            <CarouselItem className="h-[250px] flex justify-center items-center" key={idx}>
+                                                <img className="h-full disable-blur" src={sUrl} />
                                             </CarouselItem>
                                         )
                                     }
