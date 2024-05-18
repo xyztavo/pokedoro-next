@@ -86,11 +86,11 @@ export default function Page() {
             </div>
             {aditionalData.flavor_text_entries &&
                 <div className="flex flex-col">
-                    <div className="flex flex-col justify-center items-center gap-4 p-2">
+                    <div className="flex flex-col justify-center items-center gap-4 p-4">
                         <h1>Quotes:</h1>
-                        <div className="flex flex-col md:flex-row border rounded-md ">
+                        <div className="flex flex-col md:flex-row  border rounded-md">
                             {quotesEntries.map((e, idx) => {
-                                return <p key={idx} className="border-y md:border-x p-4 max-w-[400px] text-[10px] leading-5 font-thin text-center">{aditionalData.flavor_text_entries[e].flavor_text}</p>
+                                return <p key={idx} className="flex justify-center items-center border-t md:border-t-0 md:border-r p-4 max-w-[400px] text-[9px] leading-5 font-thin text-center">{aditionalData.flavor_text_entries[e].flavor_text}</p>
                             })}
                         </div>
                     </div>
