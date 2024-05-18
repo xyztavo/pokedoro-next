@@ -13,7 +13,7 @@ import { pokeApi } from "@/types/poke-api"
 
 export function SpriteGallery({ pokeApiData }: { pokeApiData: pokeApi }) {
     return (
-        <div className="flex flex-col justify-center items-center gap-4 h-96 w-[350px] border rounded-md p-4">
+        <div className="flex flex-col justify-center items-center gap-4 w-[350px] border rounded-md p-4">
             <Tabs defaultValue="artwork" className="flex flex-col justify-center items-center">
                 <h1>Sprites gallery:</h1>
                 <TabsList >
