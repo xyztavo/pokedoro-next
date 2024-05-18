@@ -40,7 +40,7 @@ export default function Page() {
     return (
         data &&
         aditionalData &&
-        <div className="flex flex-col justify-center gap-4 ">
+        <div className="flex flex-col p-2 gap-4">
             <div className="flex flex-col md:flex-row justify-center md:gap-28 items-center p-4 space-y-4">
                 <div className="flex flex-col items-center gap-4 border rounded-md p-4 w-[350px]">
                     <div className="flex flex-row items-center gap-4">
@@ -86,7 +86,7 @@ export default function Page() {
             </div>
             {aditionalData.flavor_text_entries &&
                 <div className="flex flex-col">
-                    <div className="flex flex-col justify-center items-center gap-4 p-4">
+                    <div className="flex flex-col justify-center items-center gap-4 ">
                         <h1>Quotes:</h1>
                         <div className="flex flex-col md:flex-row  border rounded-md">
                             {quotesEntries.map((e, idx) => {
