@@ -17,11 +17,10 @@ import {
 import { Input } from "@/components/ui/input"
 import { Loader2 } from "lucide-react"
 import Link from "next/link"
-import axios from 'axios'
+import axios, { AxiosError, AxiosResponse } from 'axios'
 import { setCookie } from "cookies-next"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
 
 const formSchema = z.object({
     email: z.string().email({
@@ -33,10 +32,11 @@ const formSchema = z.object({
 })
 
 import env from '@/lib/config.json'
+import { useState } from "react"
 
 export default function ProfileForm() {
-    const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
+    const router = useRouter()
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -45,27 +45,33 @@ export default function ProfileForm() {
         },
     })
 
-
     async function onSubmit(values: z.infer<typeof formSchema>) {
         setIsLoading(true)
-
-        try {
-            const res = await axios.post(`${env.API_BASE_URL}/user/login`, values);
-            const data = res.data;
+        await axios.post(`${env.API_BASE_URL}/user/login`, values).then((response: AxiosResponse) => {
+            const data = response.data;
             const token = data.token;
-
-            const oneDayInSeconds = 24 * 60 * 60 * 1000
-
             setCookie('auth', token, { httpOnly: false })
             toast.success('logged in')
             router.push('/user')
             router.refresh()
-        } catch (error) {
-            // todo: validate better each error using res.status = 4xx 
-            toast.error('password / user does not match')
-        } finally {
             setIsLoading(false)
-        }
+        }).catch((err: AxiosError) => {
+            switch (err.response?.status) {
+                case 401:
+                    toast.error("password does not match")
+                    setIsLoading(false)
+                    break
+                case 404:
+                    toast.error("user not found")
+                    setIsLoading(false)
+                    break
+                default:
+                    toast.error("internal server error")
+                    setIsLoading(false)
+                    break
+
+            }
+        })
     }
 
     return (
