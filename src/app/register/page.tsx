@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import axios from 'axios'
+import axios, { AxiosError, AxiosResponse } from 'axios'
 import { setCookie } from 'cookies-next'
 
 import { Button } from "@/components/ui/button"
@@ -47,23 +47,27 @@ export default function ProfileForm() {
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        try {
-            setIsLoading(true)
-            const res = await axios.post(`${env.API_BASE_URL}/user`, values);
-            const data = res.data;
+        setIsLoading(true)
+        await axios.post(`${env.API_BASE_URL}/user`, values).then((response: AxiosResponse) => {
+            const data = response.data;
             const token = data.token;
-
-            const oneDayInSeconds = 24 * 60 * 60 * 1000
-
             setCookie('auth', token, { httpOnly: false })
-            toast.success('User created.')
+            toast.success('User created with ease.')
             router.push('/user')
             router.refresh()
-        } catch (error) {
-            toast.error('User already exists.')
-        } finally {
             setIsLoading(false)
-        }
+        }).catch((err: AxiosError) => {
+            switch (err.response?.status) {
+                case 500:
+                    toast.error("user already exists")
+                    setIsLoading(false)
+                    break
+                default:
+                    toast.error("internal server error")
+                    setIsLoading(false)
+                    break
+            }
+        })
     }
 
     return (
