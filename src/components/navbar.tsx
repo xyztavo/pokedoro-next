@@ -34,7 +34,7 @@ export function Navbar() {
                             <SheetClose asChild><Button variant={'outline'} className="flex items-center text-2xl" asChild><Link href={'/'}>Pokedóro</Link></Button></SheetClose>
 
                             <SheetClose asChild>
-                                <LoginCard />
+                                <LoginCard withSheetClose />
                             </SheetClose>
 
                             <div className="flex flex-row items-center gap-4">

@@ -13,9 +13,15 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { useRouter } from "next/navigation";
+import { SheetClose } from "../ui/sheet";
+import React from "react";
 
 
-export function LoginCard() {
+export function LoginCard(props: any) {
+    const [SheetCloseWrapper, shetCloseWrapperProps] = props.withSheetClose
+        ? [SheetClose, { asChild: true }]
+        : [React.Fragment, {}];
+
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const router = useRouter()
     const cookieValue = getCookie('auth')
@@ -30,13 +36,15 @@ export function LoginCard() {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                    <Link href={'/user'}>Pokemons</Link>
+                    <SheetCloseWrapper {...shetCloseWrapperProps}>
+                        <Link href={'/user'}>Pokemons</Link>
+                    </SheetCloseWrapper>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => {
                     deleteCookie('auth')
                     router.push('/login')
                     router.refresh()
-                    }}>Logout</DropdownMenuItem>
+                }}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
     )
