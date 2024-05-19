@@ -35,11 +35,11 @@ export function LoginCard(props: any) {
             <DropdownMenuContent>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                    <SheetCloseWrapper {...shetCloseWrapperProps}>
+                <SheetCloseWrapper {...shetCloseWrapperProps}>
+                    <DropdownMenuItem asChild>
                         <Link href={'/user'}>Pokemons</Link>
-                    </SheetCloseWrapper>
-                </DropdownMenuItem>
+                    </DropdownMenuItem>
+                </SheetCloseWrapper>
                 <DropdownMenuItem onClick={() => {
                     deleteCookie('auth')
                     router.push('/login')
