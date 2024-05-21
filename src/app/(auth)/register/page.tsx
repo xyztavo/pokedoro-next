@@ -27,7 +27,7 @@ import env from '@/lib/config.json'
 const formSchema = z.object({
     name: z.string().min(5, {
         message: "username must have at least 5 characters."
-    }).max(20, { message: "max username characters is 20" }),
+    }).max(20, { message: "max username characters is 20" }).refine(s => !s.includes(' '), 'user shall contain no spaces.').refine((value) => /^[a-zA-Z]+[-'s]?[a-zA-Z ]+$/.test(value ?? ""), 'must be only alphabetical.'),
     email: z.string().email({
         message: "Email not valid."
     }),
