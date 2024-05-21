@@ -50,7 +50,7 @@ export default function ProfileForm() {
         await axios.post(`${env.API_BASE_URL}/user/login`, values).then((response: AxiosResponse) => {
             const data = response.data;
             const token = data.token;
-            setCookie('auth', token, { httpOnly: false })
+            setCookie('auth', token)
             toast.success('logged in')
             router.push('/user')
             router.refresh()
