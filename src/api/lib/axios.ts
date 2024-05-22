@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // todo: try to fix ENV because its not working for some reason ,
-const API_BASE_URL = "http://127.0.0.1:8787"
+const API_BASE_URL = "https://pokedoro.gustavocluna81.workers.dev"
 
 export const baseUrl = axios.create({ 
     baseURL: API_BASE_URL
