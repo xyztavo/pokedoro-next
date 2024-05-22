@@ -21,8 +21,7 @@ export default function Page() {
     const params = useParams<{ username: string }>()
 
     const { data, isLoading, isValidating, error } = useSWR(['user/username', pageIndex, query], async () => {
-        const res = await usersRoute
-            .get(`/${params.username}/pokemon?pageIndex=${pageIndex ? pageIndex : 0}${query ? `&query=${query}` : ''}`)
+        const res = await usersRoute.get(`/${params.username}/pokemons?pageIndex=${pageIndex ? pageIndex : 0}${query ? `&query=${query}` : ''}`)
         return res.data
     }, {
         shouldRetryOnError: false,
