@@ -40,14 +40,18 @@ export function LoginCard(props: any) {
                         <Link href={'/user'}>Pokemons</Link>
                     </DropdownMenuItem>
                 </SheetCloseWrapper>
-                <DropdownMenuItem onClick={() => {
-                    deleteCookie('auth')
-                    router.push('/login')
-                    router.refresh()
-                }}>Logout</DropdownMenuItem>
+                <SheetCloseWrapper {...shetCloseWrapperProps}>
+                    <DropdownMenuItem onClick={() => {
+                        deleteCookie('auth')
+                        router.push('/login')
+                        router.refresh()
+                    }}>Logout</DropdownMenuItem>
+                </SheetCloseWrapper>
             </DropdownMenuContent>
         </DropdownMenu>
     )
 
-    if (!isLoggedIn) return <Button variant={'outline'} asChild><Link href={'/login'}>Log in</Link></Button>
+    if (!isLoggedIn) return <SheetCloseWrapper {...shetCloseWrapperProps}>
+        <Button variant={'outline'} asChild><Link href={'/login'}>Log in</Link></Button>
+    </SheetCloseWrapper>
 }
