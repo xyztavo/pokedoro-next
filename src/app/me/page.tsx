@@ -12,8 +12,8 @@ import { putRandomUserPoke } from '@/api/put-random-user-poke'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { returnTypeIcon } from '@/components/pokemon/return-type-icon'
 import { toast } from 'sonner'
-import env from '@/lib/config.json'
 import { pokemonList } from '@/components/pokemon/pokemons-list'
+import { meRoute } from '@/api/lib/axios'
 
 function Page() {
     // pagination and query stuff
@@ -26,17 +26,17 @@ function Page() {
 
     const authToken = getCookie('auth')
 
-    const { mutate, data, error, isLoading } = useSWR(['get/user/pokemon', pageIndex, query], async () => {
-        const results = await fetch(`${env.API_BASE_URL}/user/pokemon?pageIndex=${pageIndex ? pageIndex : 0}${query ? `&query=${query}` : ''}`, {
-            headers: new Headers({
-                'Authorization': `Beaerer ${authToken}`
-            }),
+    const { mutate, data, error, isLoading } = useSWR(['get/me/pokemon', pageIndex, query], async () => {
+        const results = await meRoute.get(`/pokemon?pageIndex=${pageIndex ? pageIndex : 0}${query ? `&query=${query}` : ''}`, {
+            headers: {
+                Authorization: `Beaerer ${authToken}`
+            },
         },)
-        return await results.json()
+        return  results.data
     }, { shouldRetryOnError: false, revalidateOnFocus: false })
 
 
-    const { trigger, data: newPokeData, isMutating, reset } = useSWRMutation('put/user/pokemon', putRandomUserPoke, {
+    const { trigger, data: newPokeData, isMutating, reset } = useSWRMutation('put/me/pokemon', putRandomUserPoke, {
         onError: () => toast.error('could not add new pokemon')
     })
 
@@ -67,7 +67,7 @@ function Page() {
             </div>
             <form className="flex flex-row items-center justify-center" onSubmit={(e) => {
                 e.preventDefault()
-                router.push(`/user?query=${pokemonQuery}`)
+                router.push(`/me?query=${pokemonQuery}`)
             }}>
                 <div className="flex flex-row gap-4 max-w-[1/2]">
                     <Input value={pokemonQuery} onChange={(e) => setPokemonQuery(e.target.value)} placeholder="search for a pokemon" />
@@ -78,7 +78,7 @@ function Page() {
                 <div className='flex flex-col items-center justify-center my-4 gap-4'>
                     <h2>No pokemons named <strong>{pokemonQuery}</strong> were found in your bag.</h2>
                     <Button onClick={() => {
-                        router.push('/user')
+                        router.push('/me')
                         setPokemonQuery('')
                     }}>Go back.</Button>
                 </div>
@@ -92,7 +92,7 @@ function Page() {
                     <Pagination className='scale-75 md:scale-100'>
                         <PaginationContent>
                             <PaginationItem>
-                                <PaginationPrevious href="#" onClick={() => router.push(`/user?pageIndex=${currentPage > 0 ? currentPage - 1 : currentPage}${pokemonQuery ? '&query=' + pokemonQuery : ''}`)} />
+                                <PaginationPrevious href="#" onClick={() => router.push(`/me?pageIndex=${currentPage > 0 ? currentPage - 1 : currentPage}${pokemonQuery ? '&query=' + pokemonQuery : ''}`)} />
                             </PaginationItem>
                             <PaginationItem>
                                 <PaginationLink href="#">{currentPage - 1}</PaginationLink>
@@ -111,7 +111,7 @@ function Page() {
                             <PaginationItem>
                                 <PaginationNext href="#" onClick={() => {
                                     if (currentPage >= data.maxPages) return
-                                    router.push(`/user?pageIndex=${currentPage + 1}${pokemonQuery ? '&query=' + pokemonQuery : ''}`)
+                                    router.push(`/me?pageIndex=${currentPage + 1}${pokemonQuery ? '&query=' + pokemonQuery : ''}`)
                                 }
                                 } />
                             </PaginationItem>

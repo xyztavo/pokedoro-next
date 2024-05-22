@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default async function Page() {
-  const data = await getPokemons(0)
+  const data = await getPokemons()
   return (
     <div className="flex flex-col items-center justify-center space-y-8 m-2 rounded-md">
       <h1 className="text-xl text-center">Lots of pokemons to choose from!</h1>

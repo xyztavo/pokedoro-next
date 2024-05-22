@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import axios, { AxiosError, AxiosResponse } from 'axios'
+import { AxiosError, AxiosResponse } from 'axios'
 import { setCookie } from 'cookies-next'
 
 import { Button } from "@/components/ui/button"
@@ -22,7 +22,7 @@ import { toast } from "sonner"
 import { useRouter } from 'next/navigation'
 import { useState } from "react"
 import { Loader2 } from "lucide-react"
-import env from '@/lib/config.json'
+import { meRoute } from "@/api/lib/axios"
 
 const formSchema = z.object({
     name: z.string().min(5, {
@@ -48,12 +48,12 @@ export default function ProfileForm() {
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         setIsLoading(true)
-        await axios.post(`${env.API_BASE_URL}/user`, values).then((response: AxiosResponse) => {
+        await meRoute.post('', values).then((response: AxiosResponse) => {
             const data = response.data;
             const token = data.token;
             setCookie('auth', token)
             toast.success('User created with ease.')
-            router.push('/user')
+            router.push('/me')
             router.refresh()
             setIsLoading(false)
         }).catch((err: AxiosError) => {

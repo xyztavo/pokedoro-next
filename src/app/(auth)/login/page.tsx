@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Loader2 } from "lucide-react"
 import Link from "next/link"
-import axios, { AxiosError, AxiosResponse } from 'axios'
+import { AxiosError, AxiosResponse } from 'axios'
 import { setCookie } from "cookies-next"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
@@ -31,8 +31,8 @@ const formSchema = z.object({
     })
 })
 
-import env from '@/lib/config.json'
 import { useState } from "react"
+import { meRoute } from "@/api/lib/axios"
 
 export default function ProfileForm() {
     const [isLoading, setIsLoading] = useState(false)
@@ -47,12 +47,12 @@ export default function ProfileForm() {
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         setIsLoading(true)
-        await axios.post(`${env.API_BASE_URL}/user/login`, values).then((response: AxiosResponse) => {
+        await meRoute.post('/login', values).then((response: AxiosResponse) => {
             const data = response.data;
             const token = data.token;
             setCookie('auth', token)
             toast.success('logged in')
-            router.push('/user')
+            router.push('/me')
             router.refresh()
             setIsLoading(false)
         }).catch((err: AxiosError) => {

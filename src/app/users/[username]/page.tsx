@@ -2,13 +2,13 @@
 import axios from "axios";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import useSWR from 'swr'
-import env from '@/lib/config.json'
 import { Loader2, Search } from "lucide-react";
 import { pokemonList } from "@/components/pokemon/pokemons-list";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination'
+import { usersRoute } from "@/api/lib/axios";
 
 
 export default function Page() {
@@ -21,8 +21,8 @@ export default function Page() {
     const params = useParams<{ username: string }>()
 
     const { data, isLoading, isValidating, error } = useSWR(['user/username', pageIndex, query], async () => {
-        const res = await axios
-            .get(`${env.API_BASE_URL}/user/${params.username}/pokemon?pageIndex=${pageIndex ? pageIndex : 0}${query ? `&query=${query}` : ''}`)
+        const res = await usersRoute
+            .get(`/${params.username}/pokemon?pageIndex=${pageIndex ? pageIndex : 0}${query ? `&query=${query}` : ''}`)
         return res.data
     }, {
         shouldRetryOnError: false,

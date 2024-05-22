@@ -14,27 +14,25 @@ import {
 import { pokeApi } from "@/types/poke-api"
 import { SpriteGallery } from "@/components/pokemon/sprite-gallery"
 import { ArrowUp, Weight } from "lucide-react"
+import { pokeApiRoute } from "@/api/lib/axios"
 
 
 export default function Page() {
     const params = useParams<{ pokemonId: string }>()
 
     const { data, error, isLoading, isValidating } = useSWR<pokeApi>('pokemon', async () => {
-        const results = await axios.get(`https://pokeapi.co/api/v2/pokemon/${params.pokemonId}`)
+        const results = await pokeApiRoute.get(`/pokemon/${params.pokemonId}`)
         return results.data
     }, { shouldRetryOnError: false })
 
     const { data: aditionalData, error: aditionalError, isLoading: isAditionalLoading, isValidating: isAditionalValidating } = useSWR('species', async () => {
-        const results = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${params.pokemonId}/`)
+        const results = await pokeApiRoute.get(`/pokemon-species/${params.pokemonId}/`)
         return results.data
     }, { shouldRetryOnError: false })
 
 
-
-
     if (error) return <div className="text-center my-4">No Pokemons found. <Button variant={'outline'} asChild><Link href={'/'}>Go back</Link></Button></div>
     if (isLoading || isValidating || isAditionalLoading || isAditionalValidating) return <div className="text-center my-4">loading...</div>
-
 
     const quotesEntries = [0, 3, 4]
     return (

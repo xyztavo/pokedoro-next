@@ -37,7 +37,7 @@ export function LoginCard(props: any) {
                 <DropdownMenuSeparator />
                 <SheetCloseWrapper {...shetCloseWrapperProps}>
                     <DropdownMenuItem asChild>
-                        <Link href={'/user'}>Pokemons</Link>
+                        <Link href={'/me'}>Pokemons</Link>
                     </DropdownMenuItem>
                 </SheetCloseWrapper>
                 <SheetCloseWrapper {...shetCloseWrapperProps}>

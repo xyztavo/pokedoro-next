@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button"
 import { Loader2, Loader2Icon, Search } from "lucide-react"
 import useSWR from "swr";
 import Link from "next/link"
-import env from '@/lib/config.json'
+import { baseUrl } from "@/api/lib/axios"
 
 
 function Page() {
@@ -29,8 +29,8 @@ function Page() {
 
 
     const { data, error, isLoading, } = useSWR(['a', pageIndex, query], async () => {
-        const results = await fetch(`${env.API_BASE_URL}/pokemon?pageIndex=${pageIndex ? pageIndex : 0}` + (query ? `&query=${query}` : ''))
-        return await results.json()
+        const results = await baseUrl.get(`/pokemon?pageIndex=${pageIndex ? pageIndex : 0}` + (query ? `&query=${query}` : ''))
+        return results.data
     }, { shouldRetryOnError: false, revalidateOnFocus: false })
 
     if (isLoading) return (

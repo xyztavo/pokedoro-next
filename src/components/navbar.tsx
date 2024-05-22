@@ -8,7 +8,7 @@ import {
     SheetContent,
     SheetTrigger,
 } from "@/components/ui/sheet"
-import { LoginCard } from "@/components/user/login-card"
+import { LoginCard } from "@/components/me/login-card"
 
 export function Navbar() {
     return (
