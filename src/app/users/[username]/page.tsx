@@ -4,7 +4,7 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import useSWR from 'swr'
 import env from '@/lib/config.json'
 import { Loader2, Search } from "lucide-react";
-import { pokemonListAnimated } from "@/components/pokemon/pokemons-list-with-animation";
+import { pokemonList } from "@/components/pokemon/pokemons-list";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
@@ -65,7 +65,7 @@ export default function Page() {
                         </div>
                     </form>
                     <h1>{data.user} Pokémons:</h1>
-                    <div className="flex flex-row justify-center items-center flex-wrap gap-4">{pokemonListAnimated(data.pokemons)}</div>
+                    <div className="flex flex-row justify-center items-center flex-wrap gap-4">{pokemonList(data.pokemons)}</div>
                     <Pagination className='scale-75 md:scale-100'>
                         <PaginationContent>
                             <PaginationItem>

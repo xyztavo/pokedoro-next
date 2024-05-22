@@ -7,7 +7,7 @@ export function pokemonList(pokemons: TPokemons) {
         <div
             key={poke.id}
         >
-        <div className="border rounded-md bg-background" >
+        <div className="border rounded-md bg-background hover:scale-[1.15] transition-transform" >
                 <Link href={`/pokedex/${poke.id}`}>
                     <div className="flex items-center justify-center gap-4 border-b">
                         <div className="flex  items-center justify-center gap-4">

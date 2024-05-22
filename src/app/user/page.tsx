@@ -13,7 +13,7 @@ import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { returnTypeIcon } from '@/components/pokemon/return-type-icon'
 import { toast } from 'sonner'
 import env from '@/lib/config.json'
-import { pokemonListAnimated } from '@/components/pokemon/pokemons-list-with-animation'
+import { pokemonList } from '@/components/pokemon/pokemons-list'
 
 function Page() {
     // pagination and query stuff
@@ -87,7 +87,7 @@ function Page() {
                 <div className='flex flex-col items-center justify-center space-y-8 m-2 rounded-md'>
                     <h1>{data.user}</h1>
                     <div className="flex flex-row justify-center items-center flex-wrap gap-4">
-                        {data && pokemonListAnimated(data.pokemons)}
+                        {data && pokemonList(data.pokemons)}
                     </div>
                     <Pagination className='scale-75 md:scale-100'>
                         <PaginationContent>
