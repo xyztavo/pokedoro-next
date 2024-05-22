@@ -13,7 +13,7 @@ import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { returnTypeIcon } from '@/components/pokemon/return-type-icon'
 import { toast } from 'sonner'
 import { pokemonList } from '@/components/pokemon/pokemons-list'
-import { meRoute } from '@/api/lib/axios'
+import { mePokemonsRoute, meRoute } from '@/api/lib/axios'
 
 function Page() {
     // pagination and query stuff
@@ -27,7 +27,7 @@ function Page() {
     const authToken = getCookie('auth')
 
     const { mutate, data, error, isLoading } = useSWR(['get/me/pokemon', pageIndex, query], async () => {
-        const results = await meRoute.get(`/pokemon?pageIndex=${pageIndex ? pageIndex : 0}${query ? `&query=${query}` : ''}`, {
+        const results = await meRoute.get(`/pokemons?pageIndex=${pageIndex ? pageIndex : 0}${query ? `&query=${query}` : ''}`, {
             headers: {
                 Authorization: `Beaerer ${authToken}`
             },

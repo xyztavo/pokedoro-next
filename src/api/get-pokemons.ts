@@ -1,7 +1,7 @@
-import { baseUrl } from "./lib/axios"
+import { pokemonsRoute } from "./lib/axios"
 
 async function getPokemons() {
-    const results = await baseUrl.get(`/pokemon`)
+    const results = await pokemonsRoute.get('')
     return results.data
 }
 

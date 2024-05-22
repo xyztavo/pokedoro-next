@@ -28,8 +28,8 @@ function Page() {
     const currentPage = pageIndex ? pageIndex : 0
 
 
-    const { data, error, isLoading, } = useSWR(['a', pageIndex, query], async () => {
-        const results = await baseUrl.get(`/pokemon?pageIndex=${pageIndex ? pageIndex : 0}` + (query ? `&query=${query}` : ''))
+    const { data, error, isLoading, } = useSWR(['/pokedex', pageIndex, query], async () => {
+        const results = await baseUrl.get(`/pokemons?pageIndex=${pageIndex ? pageIndex : 0}` + (query ? `&query=${query}` : ''))
         return results.data
     }, { shouldRetryOnError: false, revalidateOnFocus: false })
 
