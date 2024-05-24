@@ -1,5 +1,4 @@
 "use client"
-import axios from "axios";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import useSWR from 'swr'
 import { Loader2, Search } from "lucide-react";
@@ -8,9 +7,8 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination'
-import { usersRoute } from "@/api/lib/axios";
-
-
+import { userRoute } from "@/api/lib/axios";
+ 
 export default function Page() {
     const [pokemonQuery, setPokemonQuery] = useState('')
     const searchParams = useSearchParams()
@@ -21,12 +19,13 @@ export default function Page() {
     const params = useParams<{ username: string }>()
 
     const { data, isLoading, isValidating, error } = useSWR(['user/username', pageIndex, query], async () => {
-        const res = await usersRoute.get(`/${params.username}/pokemons?pageIndex=${pageIndex ? pageIndex : 0}${query ? `&query=${query}` : ''}`)
+        const res = await userRoute.get(`/${params.username}/pokemons?pageIndex=${pageIndex ? pageIndex : 0}${query ? `&query=${query}` : ''}`)
         return res.data
     }, {
         shouldRetryOnError: false,
     })
 
+     
     //  should fix the poor error handling. it works perfectly for now but not best practices. 
     //  should fix the inarray must have at least in backend
 

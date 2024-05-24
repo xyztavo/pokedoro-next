@@ -27,10 +27,14 @@ function Page() {
     const authToken = getCookie('auth')
 
     const { mutate, data, error, isLoading } = useSWR(['get/me/pokemon', pageIndex, query], async () => {
-        const results = await meRoute.get(`/pokemons?pageIndex=${pageIndex ? pageIndex : 0}${query ? `&query=${query}` : ''}`, {
+        const results = await mePokemonsRoute.get('', {
             headers: {
                 Authorization: `Beaerer ${authToken}`
             },
+            params: {
+                pageIndex: pageIndex ? pageIndex : 0,
+                query: query && query,
+            }
         },)
         return  results.data
     }, { shouldRetryOnError: false, revalidateOnFocus: false })

@@ -19,12 +19,8 @@ export const mePokemonsRoute = axios.create({
     baseURL: `${API_BASE_URL}/me/pokemons`
 })
 
-export const usersRoute = axios.create({
+export const userRoute = axios.create({
     baseURL: `${API_BASE_URL}/users`
-})
-
-export const userPokemonsRoute = axios.create({
-    baseURL: `${API_BASE_URL}/users/pokemons`
 })
 
 export const pokeApiRoute = axios.create({
