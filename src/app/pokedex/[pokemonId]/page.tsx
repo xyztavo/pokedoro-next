@@ -54,18 +54,18 @@ export default function Page() {
                             const typeIdActual = String(typeId[1]).replace(',', '')
 
                             return (
-                                <img key={idx} className="disable-blur" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vi/x-y/${typeIdActual}.png`}></img>
+                                <img key={idx} className="disable-blur" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vi/x-y/${typeIdActual}.png`} />
                             )
                         })}
                     </div>
                     <Carousel opts={{
                         loop: true,
                     }}>
-                        <CarouselContent className="max-w-56">
+                        <CarouselContent className="w-64">
                             {Object.values(data.sprites.versions['generation-v']['black-white'].animated).sort().map((sUrl, idx) => {
                                 if (typeof sUrl == 'string') {
                                     return (
-                                        <CarouselItem key={idx}>
+                                        <CarouselItem key={idx} className="flex justify-center items-center h-[250px]">
                                             <img className="w-full disable-blur" src={sUrl} />
                                         </CarouselItem>
                                     )
