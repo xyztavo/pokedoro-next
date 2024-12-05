@@ -41,7 +41,7 @@ function Page() {
 
 
     const { trigger, data: newPokeData, isMutating, reset } = useSWRMutation('put/me/pokemon', putRandomUserPoke, {
-        onError: () => toast.error('could not add new pokemon')
+        onError: () => toast.error('could not add new pokemon'), onSuccess: () => mutate()
     })
 
     if (isLoading) return (
@@ -53,7 +53,6 @@ function Page() {
             <div className='my-4 flex flex-col justify-center items-center'>
                 <Button disabled={isMutating} className='flex flex-row justify-center items-center gap-4' onClick={async () => {
                     trigger()
-                    mutate()
                 }}>
                     {/* change button to loading */}
                     {isMutating ? <><Loader2 className='animate-spin' />Getting a random pokemon...</> : <>Get me a random pokemon</>}
